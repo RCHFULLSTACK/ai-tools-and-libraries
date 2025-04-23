@@ -11,6 +11,22 @@ import json
 # Konfigurera sidan
 st.set_page_config(page_title="AI-bibliotek Tracker", page_icon="🧠", layout="wide")
 
+# Lägg till CSS för bakgrundsfärg
+st.markdown("""
+<style>
+    .main {
+        background-color: #0E5287;
+        color: white;
+    }
+    h1, h2, h3, h4 {
+        color: white;
+    }
+    .stDataFrame div {
+        color: black;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 # Titelsektionen
 st.title("🧠 AI-verktyg & Bibliotek Analys")
 st.markdown("Utforska vilka AI-bibliotek som är mest populära på GitHub")
@@ -115,6 +131,9 @@ def load_ai_libraries():
 def load_library_frameworks():
     return get_library_frameworks()
 
+# Använd mörkt tema för diagram
+plt.style.use('dark_background')
+
 # Ladda data
 try:
     # Ladda språkdata
@@ -147,8 +166,9 @@ try:
         fig, ax = plt.subplots(figsize=(10, 8))
         top_libs = libraries.sort_values('stars', ascending=False).head(15)
         bars = ax.barh(top_libs['name'], top_libs['stars'], color='skyblue')
-        plt.xlabel('Antal stjärnor')
-        plt.ylabel('Bibliotek')
+        ax.tick_params(colors='white')
+        plt.xlabel('Antal stjärnor', color='white')
+        plt.ylabel('Bibliotek', color='white')
         plt.tight_layout()
         st.pyplot(fig)
     
@@ -157,8 +177,9 @@ try:
         fig, ax = plt.subplots(figsize=(10, 8))
         langs_df = language_data.sort_values('stars', ascending=False)
         bars = ax.barh(langs_df['language'], langs_df['stars'], color='lightgreen')
-        plt.xlabel('Antal stjärnor (totalt)')
-        plt.ylabel('Språk')
+        ax.tick_params(colors='white')
+        plt.xlabel('Antal stjärnor (totalt)', color='white')
+        plt.ylabel('Språk', color='white')
         plt.tight_layout()
         st.pyplot(fig)
     
@@ -183,9 +204,10 @@ try:
             fig, ax = plt.subplots(figsize=(10, 6))
             lib_langs = lib_langs.sort_values('count', ascending=False)
             bars = ax.barh(lib_langs['language'], lib_langs['count'], color='coral')
-            plt.xlabel('Användningsfrekvens')
-            plt.ylabel('Språk')
-            plt.title(f'Språkanvändning för {library_to_show}')
+            ax.tick_params(colors='white')
+            plt.xlabel('Användningsfrekvens', color='white')
+            plt.ylabel('Språk', color='white')
+            plt.title(f'Språkanvändning för {library_to_show}', color='white')
             plt.tight_layout()
             st.pyplot(fig)
             
